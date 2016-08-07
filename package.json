@@ -1,0 +1,21 @@
+{
+  "name": "aglacier",
+  "version": "0.0.1",
+  "description": "AWS Glacier upload tool with pipelines",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "amazon",
+    "glacier",
+    "aws"
+  ],
+  "author": "Ivan Shabarin",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.4.13",
+    "commander": "^2.9.0",
+    "sequentalreader": "^1.0.0"
+  }
+}
