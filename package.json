@@ -1,7 +1,10 @@
 {
-  "name": "aglacier",
+  "name": "stdin2glacier",
   "version": "0.0.1",
   "description": "AWS Glacier upload tool with pipelines",
+  "bin": {
+    "stdin2glacier": "./index.js"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,6 +19,6 @@
   "dependencies": {
     "aws-sdk": "^2.4.13",
     "commander": "^2.9.0",
-    "sequentalreader": "^1.0.0"
+    "sequentalreader": "^1.0.1"
   }
 }
