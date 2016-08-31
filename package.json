@@ -20,5 +20,14 @@
     "aws-sdk": "^2.4.13",
     "commander": "^2.9.0",
     "sequentalreader": "^1.0.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shabarin/stdin2glacier.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shabarin/stdin2glacier/issues"
+  },
+  "homepage": "https://github.com/shabarin/stdin2glacier#readme"
 }
