@@ -15,10 +15,12 @@ program
     .version(pjson.version)
     .arguments('<file>')
     .usage('[options] <file> (use `-` for stdin)')
-    .option('-s, --part-size <part-size>', 'Part size to use during upload (default 1Mb)', 1*1024*1024)
+    .option('-s, --part-size <part-size>', 'Part size (in Mb) to use during upload (can be 2^n, defaults to 1)', 1)
     .option('-r, --region <region>', 'AWS region (e.g. eu-central-1)')
     .option('-v, --vault-name <vault-name>', 'Vault name')
     .option('-d, --description <description>', 'Archive description')
+    .option('-k, --skip-parts <skip-parts>', 'Retry upload but skip all previously uploaded parts before given part number')
+    //.option('--dry-run', 'Do not actually upload anything, just simulate')
     .action((file) => {
         AWS.config.region = program.region;
         AWS.config.apiVersions.glacier = '2012-06-01';
@@ -89,11 +91,21 @@ function processData(state, data, partNum) {
             ) + '/*',
         };
 
+        if (program.skipParts && partNum < program.skipParts ) {
+            console.log("Skipping part %d", partNum);
+            return resolve(state);
+        }
+
+        //if (program.dryRun) {
+        //    console.log("Simulate uploading of part %d", partNum);
+        //    return resolve(state);
+        //}
+
         glacier.uploadMultipartPart(params, function (err, data) {
             if (err) return reject(err);
             else {
                 console.log("Successfully uploaded part %d", partNum);
-                resolve(state);
+                return resolve(state);
             }
         });
     });
@@ -130,11 +142,16 @@ function initiateUpload(state) {
             archiveDescription: program.description,
             partSize: state.partSize.toString(),
         };
+
+        //if (program.dryRun) {
+        //    return resolve(state);
+        //}
+
         glacier.initiateMultipartUpload(params, function (err, data) {
             if (err) return reject(err);
             else {
                 state.uploadId = data.uploadId;
-                resolve(state);
+                return resolve(state);
             }
         });
     });
@@ -149,6 +166,11 @@ function completeMultipartUpload(state) {
             archiveSize: state.archiveSize.toString(),
             checksum: state.checksum,
         };
+
+        //if (program.dryRun) {
+        //    return resolve();
+        //}
+
         glacier.completeMultipartUpload(params, function (err, data) {
             if (err) return reject(err);
             else resolve(data);
@@ -161,7 +183,7 @@ function doUpload(filename) {
     var fStream = filename === '-' ? process.stdin : fs.createReadStream(filename, {encoding: null});
 
     Promise.resolve()
-        .then(() => initiateUpload({partSize: program.partSize}))
+        .then(() => initiateUpload({partSize: program.partSize * 1024*1024}))
         .then((state) => {
             state.hashArr = [];
             state.archiveSize = 0;
