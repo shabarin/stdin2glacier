@@ -20,11 +20,13 @@ program
     .option('-v, --vault-name <vault-name>', 'Vault name')
     .option('-d, --description <description>', 'Archive description')
     .option('-k, --skip-parts <skip-parts>', 'Retry upload but skip all previously uploaded parts before given part number')
+    .option('-m, --max-retries <max-retries>', 'Number of times to retry a request to AWS before giving up (defaults to 0)')
     //.option('--dry-run', 'Do not actually upload anything, just simulate')
     .action((file) => {
         AWS.config.region = program.region;
         AWS.config.apiVersions.glacier = '2012-06-01';
         AWS.config.httpOptions.timeout = 300000;
+        AWS.config.maxRetries = parseInt(program.maxRetries) || 0;
         /* global ok */ glacier = new AWS.Glacier();
         doUpload(file);
     })
