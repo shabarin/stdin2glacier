@@ -1,6 +1,6 @@
 {
   "name": "stdin2glacier",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "AWS Glacier upload tool with pipelines",
   "bin": {
     "stdin2glacier": "./index.js"

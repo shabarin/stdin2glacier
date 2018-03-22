@@ -20,6 +20,7 @@ tar zc mydir | stdin2glacier - -r eu-central-1 -v myvault -d "The mydir archive"
     -v, --vault-name <vault-name>    Vault name
     -d, --description <description>  Archive description
     -k, --skip-parts <skip-parts>    Retry upload but skip all previously uploaded parts before given part number
+    -m, --max-retries <max-retries>  Number of times to retry a request to AWS before giving up (defaults to 0)
 ```
 
 ## requirements
