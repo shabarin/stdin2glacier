@@ -4,7 +4,7 @@ Anything from your stdin ====> Amazon Glacier
 ## usage example
 Tar, gzip & upload to aws glacier:
 ```
-tar zc mydir | stdin2glacier - -r eu-central-1 -v myvault -d "The mydir archive" -s 8   
+tar zc mydir | stdin2glacier - -r eu-central-1 -v myvault -d "The mydir archive"
 ```
 
 ### stdin2glacier --help
@@ -25,7 +25,8 @@ tar zc mydir | stdin2glacier - -r eu-central-1 -v myvault -d "The mydir archive"
 
 ## requirements
 Nodejs 4+
-You also should have AWS credentials in your `~/.aws/credentials` file:
+
+You should also have AWS credentials in your `~/.aws/credentials` file:
 
 ```
 [default]
