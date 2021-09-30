@@ -1,5 +1,5 @@
 # stdin2glacier
-Anything from your stdin ====> Amazon Glacier
+Anything from your stdout ====> Amazon Glacier
 
 ## usage example
 Tar, gzip & upload to aws glacier:
